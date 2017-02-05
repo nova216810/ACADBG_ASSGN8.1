@@ -1,0 +1,12 @@
+wordcount.pig
+-------------
+data =  load 'wordlines.txt' using pigStorage ('\n') as (line:chararray);
+A = foreach data generate FLATTEN(TOKENIZE(line,' ')) as word;
+B = group A by word;
+C = foreach B generate group as word, COUNT(A);
+dump c;
+
+
+execution
+----------
+localhost> pig -x local wc.pig
